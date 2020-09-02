@@ -1,0 +1,72 @@
+#region Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+//-----------------------------------------------------------------------------
+// Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+// Web: https://www.technosoftware.com 
+// 
+// The source code in this file is covered under a dual-license scenario:
+//   - Owner of a purchased license: RPL 1.5
+//   - GPL V3: everybody else
+//
+// RPL license terms accompanied with this source code.
+// See https://technosoftware.com/license/RPLv15License.txt
+//
+// GNU General Public License as published by the Free Software Foundation;
+// version 3 of the License are accompanied with this source code.
+// See https://technosoftware.com/license/GPLv3License.txt
+//
+// This source code is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE.
+//-----------------------------------------------------------------------------
+#endregion Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+
+#region Using Directives
+using System;
+using Technosoftware.DaAeHdaClient;
+#endregion
+
+namespace Technosoftware.DaAeHdaClient.Ae
+{
+	/// <summary>
+	/// Contains a writeable collection attribute ids.
+	/// </summary>
+	[Serializable]
+	public class TsCAeAttributeCollection : OpcWriteableCollection
+	{
+		///////////////////////////////////////////////////////////////////////
+		#region Constructors, Destructor, Initialization
+
+		/// <summary>
+		/// Creates an empty collection.
+		/// </summary>
+		internal TsCAeAttributeCollection() : base(null, typeof(int)) { }
+
+		/// <summary>
+		/// Creates a collection from an array.
+		/// </summary>
+		internal TsCAeAttributeCollection(int[] attributeIDs) : base(attributeIDs, typeof(int)) { }
+
+		#endregion
+
+		///////////////////////////////////////////////////////////////////////
+		#region Public Methods
+
+		/// <summary>
+		/// An indexer for the collection.
+		/// </summary>
+		public new int this[int index]
+		{
+			get { return (int)Array[index]; }
+		}
+
+		/// <summary>
+		/// Returns a copy of the collection as an array.
+		/// </summary>
+		public new int[] ToArray()
+		{
+			return (int[])Array.ToArray(typeof(int));
+		}
+
+		#endregion
+	}
+}

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- This file may be overwritten by automation. -->
+<Project>
+  <PropertyGroup>
+    <BuildDate>6/22/2020 8:42:06 AM +00:00</BuildDate>
+    <VersionBuild Condition="'$(VersionBuild)' == ''">20322</VersionBuild>
+    <VersionRevision Condition="'$(VersionRevision)' == ''">1463</VersionRevision>
+  </PropertyGroup>
+</Project>

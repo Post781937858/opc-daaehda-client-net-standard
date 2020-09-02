@@ -1,0 +1,71 @@
+#region Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+//-----------------------------------------------------------------------------
+// Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+// Web: https://www.technosoftware.com 
+// 
+// The source code in this file is covered under a dual-license scenario:
+//   - Owner of a purchased license: RPL 1.5
+//   - GPL V3: everybody else
+//
+// RPL license terms accompanied with this source code.
+// See https://technosoftware.com/license/RPLv15License.txt
+//
+// GNU General Public License as published by the Free Software Foundation;
+// version 3 of the License are accompanied with this source code.
+// See https://technosoftware.com/license/GPLv3License.txt
+//
+// This source code is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE.
+//-----------------------------------------------------------------------------
+#endregion Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+
+#region Using Directives
+using System;
+#endregion
+
+namespace Technosoftware.DaAeHdaClient.Cpx
+{
+	/// <summary>
+	/// Stores the current serialization context.
+	/// </summary>
+	internal struct TsCCpxContext
+	{
+		///////////////////////////////////////////////////////////////////////
+		#region Constructors, Destructor, Initialization
+
+		public TsCCpxContext(byte[] buffer)
+		{
+			Buffer = buffer;
+			Index = 0;
+			Dictionary = null;
+			Type = null;
+			BigEndian = false;
+			CharWidth = 2;
+			StringEncoding = STRING_ENCODING_UCS2;
+			FloatFormat = FLOAT_FORMAT_IEEE754;
+		}
+
+		#endregion
+
+		///////////////////////////////////////////////////////////////////////
+		#region Public Fields
+
+		public byte[] Buffer;
+		public int Index;
+		public TypeDictionary Dictionary;
+		public TypeDescription Type;
+		public bool BigEndian;
+		public int CharWidth;
+		public string StringEncoding;
+		public string FloatFormat;
+
+
+		public const string STRING_ENCODING_ACSII = "ASCII";
+		public const string STRING_ENCODING_UCS2 = "UCS-2";
+		public const string FLOAT_FORMAT_IEEE754 = "IEEE-754";
+
+		#endregion
+
+	}
+}

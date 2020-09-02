@@ -1,0 +1,340 @@
+#region Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+//-----------------------------------------------------------------------------
+// Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+// Web: https://www.technosoftware.com 
+// 
+// The source code in this file is covered under a dual-license scenario:
+//   - Owner of a purchased license: RPL 1.5
+//   - GPL V3: everybody else
+//
+// RPL license terms accompanied with this source code.
+// See https://technosoftware.com/license/RPLv15License.txt
+//
+// GNU General Public License as published by the Free Software Foundation;
+// version 3 of the License are accompanied with this source code.
+// See https://technosoftware.com/license/GPLv3License.txt
+//
+// This source code is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE.
+//-----------------------------------------------------------------------------
+#endregion Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+
+#region Using Directives
+using System;
+using System.Net;
+#endregion
+
+namespace Technosoftware.DaAeHdaClient
+{
+	/// <summary>
+	/// Contains information required to connect to the OPC server.
+	/// </summary>
+	[Serializable]
+	public class OpcUrl : ICloneable
+	{
+		///////////////////////////////////////////////////////////////////////
+		#region Constructors, Destructor, Initialization
+
+		/// <summary>
+		/// Initializes an empty instance.
+		/// </summary>
+		public OpcUrl()
+		{
+			Scheme = OpcUrlScheme.HTTP;
+			HostName = "localhost";
+			Port = 0;
+			Path = null;
+		}
+
+
+		/// <summary>
+		/// Initializes an instance by providing OPC specification, OPC URL scheme and an URL string.
+		/// </summary>
+        /// <param name="specification">A description of an interface version defined by an OPC specification.</param>
+        /// <param name="scheme">The scheme (protocol) for the URL</param>
+		/// <param name="url">The URL of the OPC server.</param>
+		public OpcUrl(OpcSpecification specification, string scheme, string url)
+		{
+            Specification = specification;
+            HostName = "localhost";
+            Port = 0;
+            Path = null;
+
+            ParseUrl(url);
+
+            Scheme = scheme;
+        }
+
+		/// <summary>
+		/// Initializes an instance by parsing an URL string.
+		/// </summary>
+		/// <param name="url">The URL of the OPC server.</param>
+		public OpcUrl(string url)
+		{
+			Scheme = OpcUrlScheme.HTTP;
+			HostName = "localhost";
+			Port = 0;
+			Path = null;
+
+            ParseUrl(url);
+		}
+
+		#endregion
+
+		///////////////////////////////////////////////////////////////////////
+		#region Properties
+
+        /// <summary>
+        /// The supported OPC specification.
+        /// </summary>
+        public OpcSpecification Specification { get; set; }
+
+		/// <summary>
+		/// The scheme (protocol) for the URL
+		/// </summary>
+		public string Scheme { get; set; }
+
+		/// <summary>
+		/// The host name for the URL.
+		/// </summary>
+		public string HostName { get; set; }
+
+		/// <summary>
+		/// The port name for the URL (0 means default for protocol).
+		/// </summary>
+		public int Port { get; set; }
+
+		/// <summary>
+		/// The path for the URL.
+		/// </summary>
+		public string Path { get; set; }
+		#endregion
+
+		///////////////////////////////////////////////////////////////////////
+		#region Object Method Overrides
+
+		/// <summary>
+		/// Returns a URL string for the object.
+		/// </summary>
+		public override string ToString()
+		{
+			string hostName = (HostName == null || HostName == "") ? "localhost" : HostName;
+
+			if (Port > 0)
+			{
+				return String.Format("{0}://{1}:{2}/{3}", new object[] { Scheme, hostName, Port, Path });
+			}
+			else
+			{
+				return String.Format("{0}://{1}/{2}", new object[] { Scheme, hostName, Path });
+			}
+		}
+
+		/// <summary>
+		/// Compares the object to either another URL object or a URL string.
+		/// </summary>
+		public override bool Equals(object target)
+		{
+			OpcUrl url;
+
+			if (target != null && target.GetType() == typeof(OpcUrl))
+			{
+				url = (OpcUrl)target;
+			}
+			else
+			{
+				url = null;
+			}
+
+			if (target != null && target.GetType() == typeof(string))
+			{
+				url = new OpcUrl((string)target);
+			}
+
+			if (url == null) return false;
+			if (url.Path != Path) return false;
+			if (url.Scheme != Scheme) return false;
+			if (url.HostName != HostName) return false;
+			if (url.Port != Port) return false;
+
+			return true;
+		}
+
+		/// <summary>
+		/// Returns a hash code for the object.
+		/// </summary>
+		public override int GetHashCode()
+		{
+			return ToString().GetHashCode();
+		}
+		#endregion
+
+		///////////////////////////////////////////////////////////////////////
+		#region ICloneable Members
+		/// <summary>
+		/// Returns a deep copy of the object.
+		/// </summary>
+		public virtual object Clone()
+		{
+			return MemberwiseClone();
+		}
+		#endregion
+
+        ///////////////////////////////////////////////////////////////////////
+        #region Private Methods
+
+        private void ParseUrl(string url)
+        {
+
+			string buffer = url;
+
+			// extract the scheme (default is http).
+			int index = buffer.IndexOf("://");
+
+			if (index >= 0)
+			{
+				Scheme = buffer.Substring(0, index);
+				buffer = buffer.Substring(index + 3);
+			}
+
+			index = buffer.IndexOfAny(new char[] { '/' });
+
+			if (index < 0)
+			{
+				Path = buffer;
+				return;
+			}
+
+			string hostPortString = buffer.Substring(0, index);
+			IPAddress address;
+
+			IPAddress.TryParse(hostPortString, out address);
+
+            if (address != null && address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+            {
+                if (hostPortString.Contains("]"))
+                {
+                    HostName = hostPortString.Substring(0, hostPortString.IndexOf("]") + 1);
+                    if (hostPortString.Substring(hostPortString.IndexOf(']')).Contains(":"))
+                    {
+                        string portString = hostPortString.Substring(hostPortString.LastIndexOf(':') + 1);
+                        if (portString != "")
+                        {
+                            try
+                            {
+                                Port = System.Convert.ToUInt16(portString);
+                            }
+                            catch
+                            {
+                                Port = 0;
+                            }
+                        }
+                        else
+                        {
+                            Port = 0;
+                        }
+                    }
+                    else
+                    {
+                        Port = 0;
+                    }
+
+                    Path = buffer.Substring(index + 1);
+                }
+                else
+                {
+                    HostName = String.Format("[{0}]", hostPortString);
+                    Port = 0;
+                }
+
+                Path = buffer.Substring(index + 1);
+            }
+            else
+            {
+
+                // extract the hostname (default is localhost).
+                index = buffer.IndexOfAny(new char[] { ':', '/' });
+
+                if (index < 0)
+                {
+                    Path = buffer;
+                    return;
+                }
+
+                HostName = buffer.Substring(0, index);
+
+                // extract the port number (default is 0).
+                if (buffer[index] == ':')
+                {
+                    buffer = buffer.Substring(index + 1);
+                    index = buffer.IndexOf("/");
+
+                    string port = null;
+
+                    if (index >= 0)
+                    {
+                        port = buffer.Substring(0, index);
+                        buffer = buffer.Substring(index + 1);
+                    }
+                    else
+                    {
+                        port = buffer;
+                        buffer = "";
+                    }
+
+                    try
+                    {
+                        Port = (int)System.Convert.ToUInt16(port);
+                    }
+                    catch
+                    {
+                        Port = 0;
+                    }
+                }
+                else
+                {
+                    buffer = buffer.Substring(index + 1);
+                }
+
+                // extract the path.
+                Path = buffer;
+
+                // In case the specification is not set, we try to find it out based on the Scheme
+                if (Specification.Id == null)
+                {
+#if _OPCCLIENTSDK_DA
+                    if (Scheme == OpcUrlScheme.DA)
+                    {
+                        Specification = OpcSpecification.OPC_DA_20;
+                        return;
+                    }
+#endif
+#if _OPCCLIENTSDK_AE
+                    if (Scheme == OpcUrlScheme.AE)
+                    {
+                        Specification = OpcSpecification.OPC_AE_10;
+                        return;
+                    }
+#endif
+#if _OPCCLIENTSDK_HDA
+                    if (Scheme == OpcUrlScheme.HDA)
+                    {
+                        Specification = OpcSpecification.OPC_HDA_10;
+                        return;
+                    }
+#endif
+#if _OPCCLIENTSDK_DA
+                    if (Scheme == OpcUrlScheme.HTTP)
+                    {
+                        Specification = OpcSpecification.XML_DA_10;
+                        return;
+                    }
+#endif
+                }
+            }
+        }
+
+        #endregion
+    }
+}

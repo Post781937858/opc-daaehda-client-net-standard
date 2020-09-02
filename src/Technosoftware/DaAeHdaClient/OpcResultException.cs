@@ -1,0 +1,54 @@
+#region Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+//-----------------------------------------------------------------------------
+// Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+// Web: https://www.technosoftware.com 
+// 
+// The source code in this file is covered under a dual-license scenario:
+//   - Owner of a purchased license: RPL 1.5
+//   - GPL V3: everybody else
+//
+// RPL license terms accompanied with this source code.
+// See https://technosoftware.com/license/RPLv15License.txt
+//
+// GNU General Public License as published by the Free Software Foundation;
+// version 3 of the License are accompanied with this source code.
+// See https://technosoftware.com/license/GPLv3License.txt
+//
+// This source code is distributed in the hope that it will be useful, but
+// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+// or FITNESS FOR A PARTICULAR PURPOSE.
+//-----------------------------------------------------------------------------
+#endregion Copyright (c) 2011-2020 Technosoftware GmbH. All rights reserved
+
+#region Using Directives
+using System;
+using System.Xml;
+using System.Runtime.Serialization;
+#endregion
+
+namespace Technosoftware.DaAeHdaClient
+{
+	/// <summary>Used to raise an exception associated with a specified result code.</summary>
+	/// <remarks>
+	/// The OpcResultException includes the OPC result code within the Result
+	/// property.
+	/// </remarks>
+	/// <seealso cref="OpcResult">OpcResult Structure</seealso>
+	[Serializable]
+	public class OpcResultException : ApplicationException
+	{   /// <remarks/>
+		public OpcResult Result { get { return m_result; } }
+
+		/// <remarks/>
+		public OpcResultException(OpcResult result) : base(result.Description()) { m_result = result; }
+		/// <remarks/>
+		public OpcResultException(OpcResult result, string message) : base(message + ": " + result.ToString() + Environment.NewLine) { m_result = result; }
+		/// <remarks/>
+		public OpcResultException(OpcResult result, string message, Exception e) : base(message + ": " + result.ToString() + Environment.NewLine, e) { m_result = result; }
+		/// <remarks/>
+		protected OpcResultException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+		/// <remarks/>
+		private OpcResult m_result = OpcResult.E_FAIL;
+	}
+}
