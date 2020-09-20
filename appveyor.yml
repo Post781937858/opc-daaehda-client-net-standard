@@ -4,7 +4,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.0902.{build}-{branch}
+version: 1.0.0920.{build}-{branch}
 
 
 # branches to build
