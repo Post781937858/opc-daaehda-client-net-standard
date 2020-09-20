@@ -30,6 +30,6 @@ projects from the command-line or the IDE. -->
   <PropertyGroup>
     <VersionMajor>1</VersionMajor>
     <VersionMinor>0</VersionMinor>
-    <VersionPatch>0902</VersionPatch>
+    <VersionPatch>0920</VersionPatch>
   </PropertyGroup>
 </Project>
