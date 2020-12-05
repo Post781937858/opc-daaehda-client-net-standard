@@ -10,6 +10,7 @@ IDE. -->
     <VersionProps>$(RepoRoot)version.props</VersionProps>
     <CommonProps>$(RepoRoot)common.props</CommonProps>
     <MiscProps>$(RepoRoot)misc.props</MiscProps>
+    <TargetProps>$(RepoRoot)targets.props</TargetProps>
     <SourceLinkProps>$(BuildDir)sourcelink.props</SourceLinkProps>
     <DebugTargetProps>$(RepoRoot)debugtarget.props</DebugTargetProps>
     <GenerateAssemblyInfoTargets>$(BuildDir)\Cadru.GenerateAssemblyInfo.targets</GenerateAssemblyInfoTargets>
@@ -21,6 +22,11 @@ IDE. -->
   <Import Project="$(VersionProps)" Condition="Exists('$(VersionProps)')"/>
   <Import Project="$(CommonProps)" Condition="Exists('$(CommonProps)')"/>
   <Import Project="$(MiscProps)" Condition="Exists('$(MiscProps)')"/>
+  <Import Project="$(TargetProps)" Condition="Exists('$(TargetProps)')"/>
+
+  <PropertyGroup>
+    <SharedPropsImported>true</SharedPropsImported>
+  </PropertyGroup>
 
   <PropertyGroup>
     <DebugType Condition="'$(SourceLinkCreate)' != 'true'">embedded</DebugType>
