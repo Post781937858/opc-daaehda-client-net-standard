@@ -4,11 +4,11 @@
 // Web: https://www.technosoftware.com 
 // 
 // The source code in this file is covered under a dual-license scenario:
-//   - Owner of a purchased license: RPL 1.5
+//   - Owner of a purchased license: SCLA 1.0
 //   - GPL V3: everybody else
 //
-// RPL license terms accompanied with this source code.
-// See https://technosoftware.com/license/RPLv15License.txt
+// SCLA license terms accompanied with this source code.
+// See SCLA 1.0://technosoftware.com/license/Source_Code_License_Agreement.pdf
 //
 // GNU General Public License as published by the Free Software Foundation;
 // version 3 of the License are accompanied with this source code.
@@ -50,7 +50,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Fired when an exception occurs during callback processing.
         /// </summary>
-        public event TsCHdaCallbackExceptionHandler CallbackExceptionEvent
+        public event TsCHdaCallbackExceptionEventHandler CallbackExceptionEvent
         {
             add    {lock (this) { _callbackExceptionEvent += value; }}
             remove {lock (this) { _callbackExceptionEvent -= value; }}
@@ -71,36 +71,6 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         
                 // return requests.
                 return request;
-            }
-        }
-
-        /// <summary>
-        /// Cancels an existing request.
-        /// </summary>
-        public bool CancelRequest(Request request, TsCHdaCancelCompleteHandler callback)
-        {
-            lock (this)
-            {
-                // check if it is a valid request.
-                if (!m_requests.Contains(request.RequestID))
-                {
-                    return false;
-                }
-
-                // request will be removed when the cancel complete callback arrives.
-                if (callback != null)
-                {
-                    request.CancelComplete += callback;
-                }
-
-                // no confirmation required - remove request immediately.
-                else
-                {
-                    m_requests.Remove(request.RequestID);
-                }
-
-                // request will be cancelled.
-                return true;
             }
         }
 
@@ -621,7 +591,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         #region Private Members
 		private int m_nextID;
         private Hashtable m_requests = new Hashtable();
-		private TsCHdaCallbackExceptionHandler _callbackExceptionEvent;
+		private TsCHdaCallbackExceptionEventHandler _callbackExceptionEvent;
         #endregion
     }
 }

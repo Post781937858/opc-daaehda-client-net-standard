@@ -4,11 +4,11 @@
 // Web: https://www.technosoftware.com 
 // 
 // The source code in this file is covered under a dual-license scenario:
-//   - Owner of a purchased license: RPL 1.5
+//   - Owner of a purchased license: SCLA 1.0
 //   - GPL V3: everybody else
 //
-// RPL license terms accompanied with this source code.
-// See https://technosoftware.com/license/RPLv15License.txt
+// SCLA license terms accompanied with this source code.
+// See SCLA 1.0://technosoftware.com/license/Source_Code_License_Agreement.pdf
 //
 // GNU General Public License as published by the Free Software Foundation;
 // version 3 of the License are accompanied with this source code.
@@ -51,15 +51,6 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// The unqiue id assigned by the server when it was created.
         /// </summary>
         public int CancelID {get { return m_cancelID; }}
-        
-        /// <summary>
-        /// Fired when the server acknowledges that a request was cancelled.
-        /// </summary>
-        public event TsCHdaCancelCompleteHandler CancelComplete
-        {
-            add    {lock (this) { m_cancelComplete += value; }}
-            remove {lock (this) { m_cancelComplete -= value; }} 
-        }
 
         /// <summary>
         /// Fired when the server acknowledges that a request was cancelled.
@@ -146,33 +137,33 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
                 }
 
                 // invoke on data update callback.
-                if (typeof(TsCHdaDataUpdateHandler).IsInstanceOfType(m_callback))
+                if (typeof(TsCHdaDataUpdateEventHandler).IsInstanceOfType(m_callback))
                 {
-                    return InvokeCallback((TsCHdaDataUpdateHandler)m_callback, results);
+                    return InvokeCallback((TsCHdaDataUpdateEventHandler)m_callback, results);
                 }
 
                 // invoke read completed callback.
-                if (typeof(TsCHdaReadValuesHandler).IsInstanceOfType(m_callback))
+                if (typeof(TsCHdaReadValuesCompleteEventHandler).IsInstanceOfType(m_callback))
                 {
-                    return InvokeCallback((TsCHdaReadValuesHandler)m_callback, results);
+                    return InvokeCallback((TsCHdaReadValuesCompleteEventHandler)m_callback, results);
                 }
                 
                 // invoke read attributes completed callback.
-                if (typeof(TsCHdaReadAttributesHandler).IsInstanceOfType(m_callback))
+                if (typeof(TsCHdaReadAttributesCompleteEventHandler).IsInstanceOfType(m_callback))
                 {
-                    return InvokeCallback((TsCHdaReadAttributesHandler)m_callback, results);
+                    return InvokeCallback((TsCHdaReadAttributesCompleteEventHandler)m_callback, results);
                 }
                 
                 // invoke read annotations completed callback.
-                if (typeof(TsCHdaReadAnnotationsHandler).IsInstanceOfType(m_callback))
+                if (typeof(TsCHdaReadAnnotationsCompleteEventHandler).IsInstanceOfType(m_callback))
                 {
-                    return InvokeCallback((TsCHdaReadAnnotationsHandler)m_callback, results);
+                    return InvokeCallback((TsCHdaReadAnnotationsCompleteEventHandler)m_callback, results);
                 }
                 
                 // invoke update completed callback.
-                if (typeof(TsCHdaUpdateCompleteHandler).IsInstanceOfType(m_callback))
+                if (typeof(TsCHdaUpdateCompleteEventHandler).IsInstanceOfType(m_callback))
                 {
-                    return InvokeCallback((TsCHdaUpdateCompleteHandler)m_callback, results);
+                    return InvokeCallback((TsCHdaUpdateCompleteEventHandler)m_callback, results);
                 }
                 
                 // callback not supported.
@@ -187,9 +178,9 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         {
             lock (this)
             {
-                if (m_cancelComplete != null)
+                if (m_cancelCompleteEvent != null)
                 {
-                    m_cancelComplete(this);
+                    m_cancelCompleteEvent(this);
                 }
             }
         }
@@ -228,7 +219,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Invokes callback for a data change update.
         /// </summary>
-        private bool InvokeCallback(TsCHdaDataUpdateHandler callback, object results)
+        private bool InvokeCallback(TsCHdaDataUpdateEventHandler callback, object results)
         {
             // check for valid result type.
             if (!typeof(TsCHdaItemValueCollection[]).IsInstanceOfType(results))
@@ -257,7 +248,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Invokes callback for a read request.
         /// </summary>
-        private bool InvokeCallback(TsCHdaReadValuesHandler callback, object results)
+        private bool InvokeCallback(TsCHdaReadValuesCompleteEventHandler callback, object results)
         {
             // check for valid result type.
             if (!typeof(TsCHdaItemValueCollection[]).IsInstanceOfType(results))
@@ -295,7 +286,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Invokes callback for a read attributes request.
         /// </summary>
-        private bool InvokeCallback(TsCHdaReadAttributesHandler callback, object results)
+        private bool InvokeCallback(TsCHdaReadAttributesCompleteEventHandler callback, object results)
         {
             // check for valid result type.
             if (!typeof(TsCHdaItemAttributeCollection).IsInstanceOfType(results))
@@ -324,7 +315,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Invokes callback for a read annotations request.
         /// </summary>
-        private bool InvokeCallback(TsCHdaReadAnnotationsHandler callback, object results)
+        private bool InvokeCallback(TsCHdaReadAnnotationsCompleteEventHandler callback, object results)
         {
             // check for valid result type.
             if (!typeof(TsCHdaAnnotationValueCollection[]).IsInstanceOfType(results))
@@ -353,7 +344,7 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         /// <summary>
         /// Invokes callback for a read annotations request.
         /// </summary>
-        private bool InvokeCallback(TsCHdaUpdateCompleteHandler callback, object results)
+        private bool InvokeCallback(TsCHdaUpdateCompleteEventHandler callback, object results)
         {
             // check for valid result type.
             if (!typeof(TsCHdaResultCollection[]).IsInstanceOfType(results))
@@ -416,7 +407,6 @@ namespace Technosoftware.DaAeHdaClient.Com.Hda
         private DateTime m_endTime = DateTime.MinValue;
         private Hashtable m_items = null;
         private ArrayList m_results = null;
-        private event TsCHdaCancelCompleteHandler m_cancelComplete = null;
         private event TsCHdaCancelCompleteEventHandler m_cancelCompleteEvent = null;
         #endregion
     }
