@@ -4,11 +4,11 @@
 // Web: https://www.technosoftware.com 
 // 
 // The source code in this file is covered under a dual-license scenario:
-//   - Owner of a purchased license: RPL 1.5
+//   - Owner of a purchased license: SCLA 1.0
 //   - GPL V3: everybody else
 //
-// RPL license terms accompanied with this source code.
-// See https://technosoftware.com/license/RPLv15License.txt
+// SCLA license terms accompanied with this source code.
+// See SCLA 1.0://technosoftware.com/license/Source_Code_License_Agreement.pdf
 //
 // GNU General Public License as published by the Free Software Foundation;
 // version 3 of the License are accompanied with this source code.
@@ -33,13 +33,6 @@ namespace Technosoftware.DaAeHdaClient.Ae
     {
 		///////////////////////////////////////////////////////////////////////
 		#region Events
-
-		/// <summary>
-        /// An event to receive event change updates.
-        /// </summary>
-        [Obsolete("This event has been superseded by the DataChangedEvent event", true)]
-        event TsCAeEventChangedHandler EventChanged;
-
         /// <summary>
         /// An event to receive event change updates.
         /// </summary>
@@ -121,16 +114,6 @@ namespace Technosoftware.DaAeHdaClient.Ae
 
 	///////////////////////////////////////////////////////////////////////////
 	#region Delegate Declarations
-
-    /// <summary>
-    /// A delegate to receive data change updates from the server.
-    /// </summary>
-    /// <param name="notifications">The notifications sent by the server when a event change occurs.</param>
-    /// <param name="refresh">TRUE if this is a subscription refresh</param>
-    /// <param name="lastRefresh">TRUE if this is the last subscription refresh in response to a specific invocation of the Refresh method.</param>
-    [Obsolete("This delegate has been superseded by the TsCAeDataChangedEventHandler delegate", true)]
-    public delegate void TsCAeEventChangedHandler(TsCAeEventNotification[] notifications, bool refresh, bool lastRefresh);
-
     /// <summary>
     /// A delegate to receive data change updates from the server.
     /// </summary>

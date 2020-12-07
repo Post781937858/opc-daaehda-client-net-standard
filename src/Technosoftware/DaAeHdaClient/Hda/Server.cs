@@ -4,11 +4,11 @@
 // Web: https://www.technosoftware.com 
 // 
 // The source code in this file is covered under a dual-license scenario:
-//   - Owner of a purchased license: RPL 1.5
+//   - Owner of a purchased license: SCLA 1.0
 //   - GPL V3: everybody else
 //
-// RPL license terms accompanied with this source code.
-// See https://technosoftware.com/license/RPLv15License.txt
+// SCLA license terms accompanied with this source code.
+// See SCLA 1.0://technosoftware.com/license/Source_Code_License_Agreement.pdf
 //
 // GNU General Public License as published by the Free Software Foundation;
 // version 3 of the License are accompanied with this source code.
@@ -1077,17 +1077,6 @@ namespace Technosoftware.DaAeHdaClient.Hda
 		{
             if (_server == null) throw new NotConnectedException();
 			((ITsCHdaServer)_server).CancelRequest(request);
-		}
-
-		/// <summary>
-		/// Cancels an asynchronous request.
-		/// </summary>
-		/// <param name="request">The state object for the request to cancel.</param>
-		/// <param name="callback">A delegate used to receive notifications when the request completes.</param>
-		public void CancelRequest(IOpcRequest request, TsCHdaCancelCompleteHandler callback)
-		{
-            if (_server == null) throw new NotConnectedException();
-			((ITsCHdaServer)_server).CancelRequest(request, callback);
 		}
 
         /// <summary>
