@@ -1,0 +1,1212 @@
+﻿project
+begin
+  projectauthor = "Thomas Johannhson"
+  projectid = {1062C41E-D739-4426-8EB0-F0CF29EACEA5}
+  projectnotes = "BuildSystem for the OPC Developer Studio Product Line "
+  target
+  begin
+    name = Default
+    targetid = {51FF066A-0818-4C40-85CB-88A6C2EA2EDD}
+    rootaction
+    begin
+      action.try
+      begin
+        id = {A70178E0-8EA7-45E7-91B3-F1324A227FF7}
+        action.target.execute
+        begin
+          actionlistid = {A5B56CF1-A71E-4E80-A260-F316A627A77A}
+          failifactionlistempty = false
+          id = {38F7DC91-1822-4407-94DD-205107A9708A}
+          resetdependencychain = false
+        end
+      end
+      action.catch
+      begin
+        appenderrors = false
+        id = {316B86B0-B9F8-463D-9053-DA012456314F}
+        action.target.execute
+        begin
+          actionlistid = {538B7184-0F68-462E-B1A4-485789001567}
+          failifactionlistempty = false
+          id = {E233257F-BCBC-458F-90D8-A3686EC6CD40}
+          resetdependencychain = false
+        end
+        action.build.stop
+        begin
+          buildresult = false
+          id = {9E607E51-940A-4587-B923-A11829275B5E}
+        end
+      end
+      action.end
+      begin
+        id = {12793671-2EAB-4FE2-8A35-BF8C6D4031DF}
+      end
+    end
+  end
+  target
+  begin
+    name = Main
+    targetid = {A5B56CF1-A71E-4E80-A260-F316A627A77A}
+    rootaction
+    begin
+      action.target.execute
+      begin
+        actionlistid = {1F38817B-D45B-4A8E-A4B7-AC86D5E90CE3}
+        failifactionlistempty = false
+        id = {A0F63550-B703-44D2-9177-4B30D3F9BB98}
+        resetdependencychain = false
+      end
+      action.target.execute
+      begin
+        actionlistid = {DF017D40-13EE-4775-B1BB-50EA8B486800}
+        failifactionlistempty = false
+        id = {FAF25C2E-2319-4561-8D13-CCCB556B8042}
+        resetdependencychain = false
+      end
+      action.target.execute
+      begin
+        actionlistid = {E047915E-CDB9-4218-B11A-C71D725D332E}
+        failifactionlistempty = false
+        id = {4FCB21A3-DBAA-4940-9EAD-7AE0AECBD56F}
+        resetdependencychain = false
+      end
+      action.target.execute
+      begin
+        actionlistid = {5EFE8660-2830-4D00-B99C-B7B621DBCC44}
+        failifactionlistempty = false
+        id = {75BFA549-B9C0-4969-82CD-5A4FA0497254}
+        resetdependencychain = false
+      end
+    end
+  end
+  target
+  begin
+    name = OnFailure
+    targetid = {538B7184-0F68-462E-B1A4-485789001567}
+    rootaction
+    begin
+      action.group
+      begin
+        description = "Distribute Status"
+        id = {81F6B26E-AAE5-4B36-BBF8-86DCF2814C30}
+        action.log.export
+        begin
+          actionlistid = {A5B56CF1-A71E-4E80-A260-F316A627A77A}
+          erroractionsonly = false
+          exportformat = efHTML
+          exportfragment = expFull
+          exportfromparenttarget = false
+          exportfromroot = false
+          fragmentactionid = {25FDC0D6-45B1-4EEE-A543-ADBAC3EFF9CF}
+          htmlstyle = Flat
+          htmltheme = Light
+          id = {25FDC0D6-45B1-4EEE-A543-ADBAC3EFF9CF}
+          includeactionendtime = true
+          includeactionruntime = true
+          includeactionstarttime = true
+          includeactiontype = true
+          includeheading = true
+          includehiddenactions = false
+          includelinenumbers = true
+          includeoutput = true
+          includesearch = true
+          includesummary = true
+          noheaderforfragment = false
+          outputfile = %build_dir%\\last_fb_run.html
+          recursiveactions = true
+        end
+      end
+    end
+  end
+  target
+  begin
+    name = PrepareEnvironment
+    targetid = {1F38817B-D45B-4A8E-A4B7-AC86D5E90CE3}
+    rootaction
+    begin
+      action.directory.delete
+      begin
+        deletehidden = true
+        deletereadonly = true
+        deletetree = true
+        enabledelay = false
+        failifnodirectory = false
+        fileordirectory = %build_dir%
+        force = false
+        id = {3BD4A700-7098-448C-AD25-CABD0ACC1871}
+        logdeletedfiles = false
+      end
+      action.group
+      begin
+        description = "Create Diretory Structure"
+        id = {42EC19D1-CB9A-4100-BEFB-4496A0C3A879}
+        action.directory.create
+        begin
+          fileordirectory = %build_dir%
+          force = true
+          id = {E9DFAD7F-ECC7-4DE8-9FCC-A9A099BC075D}
+        end
+        action.directory.create
+        begin
+          fileordirectory = %distr_netcore_dir%
+          force = true
+          id = {22E803CF-04F9-46DA-BA7A-4A89E41B4BC1}
+        end
+      end
+    end
+  end
+  target
+  begin
+    name = GatherSources
+    targetid = {DF017D40-13EE-4775-B1BB-50EA8B486800}
+    rootaction
+    begin
+      action.group
+      begin
+        description = "Collect Distributions"
+        id = {223B1134-D381-4B83-BCFE-20C84F592B8C}
+        action.setstatus
+        begin
+          id = {A68D5519-DC5E-4BEE-A675-217C2937296B}
+          isbold = false
+          setbold = false
+          setcolour = false
+          statusmessage = "Collect Distributions"
+          thecolour = 0
+        end
+        action.process.execute
+        begin
+          actionlogtitle = "Git Clone Repository of OPC DA/AEHDA/Client SDK .NET Standard Distribution"
+          captureoutput = true
+          description = "Git Clone Repository of OPC DA/AE/HDA/Client SDK .NET Standard Distribution"
+          enablelivecapture = true
+          enablereturncodecheck = true
+          enabletimeout = false
+          expandimpersonationtoken = false
+          hidewindow = true
+          id = {496DC204-BF06-4FA4-9C0A-5E8E5064FD79}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          logoutput = true
+          logprocessparameters = true
+          params = "clone --verbose %technosoftware_git_distr_netcore_url% %distr_netcore_dir%"
+          processoraffinity = 0
+          processpriority = tpNormal
+          programname = git
+          redirectstderr = true
+          returncodecomparator = rcEqualTo
+          returncodetocheck = 0
+          startindir = %distr_netcore_dir%
+          terminateontimeout = false
+          timeoutlength = 1
+          useerrordialogmonitor = false
+          waitforcompletion = true
+        end
+        action.git.create-branch
+        begin
+          actiontypeid = {DD9E318C-F0C7-46D4-9610-D9E04863A1FB}
+          customactionname = "Git Create Branch"
+          description = "Git Create Branch v%sdk_version% in OPC DA/AEHDA/Client SDK .NET Standard Distribution"
+          enabletimeout = false
+          id = {06FBEFC2-3629-427A-9639-229DCC13B68D}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          terminateontimeout = true
+          timeoutlength = 2
+          as.isdefaultrepository = False
+          as.islocal = True
+          as.localrepos = %distr_netcore_dir%
+          as.isremote = False
+          as.branchname = v%sdk_version%
+          as.isstartpoint = False
+          as.istrack = 0
+          as.isnotrack = 0
+        end
+        action.git.checkout
+        begin
+          actiontypeid = {BDB55D94-7093-4EFE-A279-A8746A7E4A61}
+          customactionname = "Git Checkout"
+          description = "Git Checkout Branch v%sdk_version% in OPC DA/AEHDA/Client SDK .NET Standard Distribution"
+          enabletimeout = false
+          id = {BAE541B5-1833-4CB8-BDE1-1C62B84A579E}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          terminateontimeout = true
+          timeoutlength = 2
+          as.isdefaultrepository = False
+          as.islocal = True
+          as.localrepos = %distr_netcore_dir%
+          as.isremote = False
+          as.branchname = v%sdk_version%
+          as.isquiet = 0
+          as.isforce = False
+          as.ismerge = False
+        end
+      end
+    end
+  end
+  target
+  begin
+    name = "Build OPC DA/AE/HDA Client SDK .NET Standard"
+    targetid = {E047915E-CDB9-4218-B11A-C71D725D332E}
+    rootaction
+    begin
+      action.group
+      begin
+        description = "Assemblies .NET Standard"
+        id = {BD28E99B-8860-4F53-A067-8AD5B21F8A07}
+        action.group
+        begin
+          description = "Build & Test OPC DA/AE/HDA Client SDK .NET StandardT Any CPU"
+          id = {1204E741-7CBA-4174-9EBD-DE6739A576A2}
+          action.setstatus
+          begin
+            id = {6A1C045B-A243-47A6-84EA-D98170C5F34F}
+            isbold = false
+            setbold = false
+            setcolour = false
+            statusmessage = "Building OPC DA/AE/HDA Client SDK .NET Standard"
+            thecolour = 0
+          end
+          action.process.execute
+          begin
+            captureoutput = true
+            description = "Execute Program [ dotnet restore DaAeHdaNetStandard.sln ]"
+            enablelivecapture = true
+            enablereturncodecheck = true
+            enabletimeout = false
+            expandimpersonationtoken = false
+            hidewindow = false
+            id = {3DDC0AF8-8264-42C0-B4DF-E3A223E4C67E}
+            impersonateusenetcredonly = false
+            impersonateuser = false
+            logoutput = true
+            logprocessparameters = true
+            params = "restore \"DaAeHdaNetStandard.sln\""
+            processoraffinity = 0
+            processpriority = tpNormal
+            programname = "dotnet "
+            redirectstderr = true
+            returncodecomparator = rcEqualTo
+            returncodetocheck = 0
+            startindir = %distr_netcore_dir%
+            terminateontimeout = false
+            timeoutlength = 1
+            useerrordialogmonitor = false
+            waitforcompletion = true
+          end
+          action.visualstudio
+          begin
+            allowunsafe = false
+            allprojects = "DaAeHdaNetStandard" +
+                          ""
+            allwarningsaserrors = false
+            applyassemblyinfoto = btAllProjects
+            applyresourceinfoto = btAllProjects
+            assemblyfileversion = |||
+            assemblyinfo = "Assembly Info"
+            assemblyversion = |||
+            autoincassemblybuildnumber = false
+            autoincassemblyfilebuildnumber = false
+            autoincassemblyfilerevisionno = false
+            autoincassemblyrevisionno = false
+            autoincbuild = false
+            autoselectdotnetversion = false
+            autoupdatefileversion = true
+            autoupdateproductversion = true
+            buildaction = baRebuild
+            buildtype = btAllProjects
+            buildversion = 0
+            codepage = 1252
+            debugconstant = false
+            description = "Build VS.Net Solution [Building DaAeHdaNetStandard.sln - Release ]"
+            disablenodereuse = true
+            disablepostbuildevent = false
+            disableprebuildevent = false
+            disableselectedwarnings = false
+            enabletimeout = false
+            expandimpersonationtoken = false
+            failifnoconfigurationsmatch = false
+            id = {B806DCD8-FA76-41BF-BA5A-8E1FC9028E7A}
+            impersonateusenetcredonly = false
+            impersonateuser = false
+            includecompiledate = false
+            isdebug = false
+            isdll = false
+            isprerelease = false
+            isprivate = false
+            isspecial = false
+            linkassemblyfileversioninfo = false
+            linkfileandproductversion = false
+            locale = 3081
+            loglevel = llNormal
+            majorversion = 0
+            maxcpus = 0
+            minorversion = 0
+            optimize = false
+            overridecompiler = false
+            overridereferencepaths = false
+            overridetargetframework = false
+            overridewarnings = false
+            processoraffinity = 0
+            processpriority = tpNormal
+            projlocationdetectmethod = useWMI
+            releaseversion = 0
+            safemode = true
+            selectedwarningsaserrors = false
+            sharepath = wwwroot$
+            solution = %distr_netcore_dir%\\DaAeHdaNetStandard.sln
+            solutionconfiguration = "Release|Any CPU"
+            structuredoutput = true
+            targetframework = fx20
+            terminateontimeout = false
+            timeoutlength = 2
+            traceconstant = false
+            updateassemblycomment = false
+            updateassemblycompany = false
+            updateassemblycopyright = false
+            updateassemblydescription = false
+            updateassemblyfileversion = false
+            updateassemblyinfo = false
+            updateassemblyproductname = false
+            updateassemblytitle = false
+            updateassemblytrademark = false
+            updateassemblyversion = false
+            updatewin32resource = false
+            usedotnetpropertyset = false
+            useenv = false
+            useerrordialogmonitor = false
+            usemsbuild = true
+            useregexonconfigname = true
+            usewin32propertyset = false
+            versioninfokeys = "FileVersion\=0.0.0.0" +
+                              ""
+            vstudioversion = vs2019
+            warninglevel = 4
+            win32versioninfo = "Win32 Version Info"
+            wmiwebsitenum = 1
+          end
+        end
+      end
+      action.group
+      begin
+        description = "Build & Test Examples .NET Standard"
+        id = {8B0B39FE-19D3-4570-A0FE-AB968931A6FC}
+        action.setstatus
+        begin
+          description = "Set Build Status Message to \"WorkshopClientSamples.sln\""
+          id = {CAF672AB-582F-41CA-B4D2-B2CAD3E2B5E6}
+          isbold = false
+          setbold = false
+          setcolour = false
+          statusmessage = "Building WorkshopClientSamples.sln"
+          thecolour = 0
+        end
+        action.process.execute
+        begin
+          captureoutput = true
+          description = "Execute Program [ dotnet restore WorkshopClientSamples.sln ]"
+          enablelivecapture = true
+          enablereturncodecheck = true
+          enabletimeout = false
+          expandimpersonationtoken = false
+          hidewindow = false
+          id = {067E6FB8-B95F-413F-87E4-09A53DF6094F}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          logoutput = true
+          logprocessparameters = true
+          params = "restore \"WorkshopClientSamples.sln\""
+          processoraffinity = 0
+          processpriority = tpNormal
+          programname = "dotnet "
+          redirectstderr = true
+          returncodecomparator = rcEqualTo
+          returncodetocheck = 0
+          startindir = %distr_netcore_dir%\\
+          terminateontimeout = false
+          timeoutlength = 1
+          useerrordialogmonitor = false
+          waitforcompletion = true
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allprojects = "DaConsole" +
+                        "AeConsole" +
+                        "HdaConsole" +
+                        "Technosoftware.DaAeHdaClient" +
+                        ""
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building WorkshopClientSamples.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {C4333795-5D5B-47BF-95B7-51356261723F}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\WorkshopClientSamples.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = false
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+      end
+      action.group
+      begin
+        description = "Build & Test Examples .NET 4.8"
+        id = {BAAA47C0-521A-4048-AB45-49CE137E6AC7}
+        action.setstatus
+        begin
+          description = "Set Build Status Message to \"Building Examples .NET 4.8\""
+          id = {56DE8C7C-7D2F-4E5C-A1F7-AEF82A2D025A}
+          isbold = false
+          setbold = false
+          setcolour = false
+          statusmessage = "Building Examples .NET 4.6"
+          thecolour = 0
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building C#\\DaBrowser\\DaBrowser.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {C657B5F5-989C-4E11-83FA-47529152F8E2}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\examples\\net\\C#\\DaBrowser\\DaBrowser.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = true
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building C#\\DaConsoleAsyncWrite\\DaConsoleAsyncWrite.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {A4A877F1-C5D3-4BFA-A1F0-08444BD66A71}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\examples\\net\\C#\\DaConsoleAsyncWrite\\DaConsoleAsyncWrite.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = true
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building C#\\DaService\\DaService.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {44619495-893B-4B99-8CF0-53F717040AA5}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\examples\\net\\C#\\DaService\\DaService.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = true
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building C#\\DaSimpleAsync\\DaSimpleAsync.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {F183C16F-66E2-48E0-9EE5-55A129945D93}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\examples\\net\\C#\\DaSimpleAsync\\DaSimpleAsync.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = true
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+        action.visualstudio
+        begin
+          allowunsafe = false
+          allwarningsaserrors = false
+          applyassemblyinfoto = btAllProjects
+          applyresourceinfoto = btAllProjects
+          assemblyfileversion = |||
+          assemblyinfo = "Assembly Info"
+          assemblyversion = |||
+          autoincassemblybuildnumber = false
+          autoincassemblyfilebuildnumber = false
+          autoincassemblyfilerevisionno = false
+          autoincassemblyrevisionno = false
+          autoincbuild = false
+          autoselectdotnetversion = false
+          autoupdatefileversion = true
+          autoupdateproductversion = true
+          buildaction = baBuild
+          buildtype = btIncludeDisabledProjects
+          buildversion = 0
+          codepage = 1252
+          debugconstant = false
+          description = "Build VS.Net Solution [Building C#\\DaSimpleSync\\DaSimpleSync.sln - Release ]"
+          disablenodereuse = true
+          disablepostbuildevent = false
+          disableprebuildevent = false
+          disableselectedwarnings = false
+          enabletimeout = false
+          expandimpersonationtoken = false
+          failifnoconfigurationsmatch = false
+          id = {4F663C15-995C-489C-945D-4A662B1C728F}
+          impersonateusenetcredonly = false
+          impersonateuser = false
+          includecompiledate = false
+          isdebug = false
+          isdll = false
+          isprerelease = false
+          isprivate = false
+          isspecial = false
+          linkassemblyfileversioninfo = false
+          linkfileandproductversion = false
+          locale = 3081
+          loglevel = llNormal
+          majorversion = 0
+          maxcpus = 0
+          minorversion = 0
+          optimize = false
+          overridecompiler = false
+          overridereferencepaths = false
+          overridetargetframework = false
+          overridewarnings = false
+          processoraffinity = 0
+          processpriority = tpNormal
+          projlocationdetectmethod = useWMI
+          releaseversion = 0
+          safemode = false
+          selectedwarningsaserrors = false
+          sharepath = wwwroot$
+          solution = %distr_netcore_dir%\\examples\\net\\C#\\DaSimpleSync\\DaSimpleSync.sln
+          solutionconfiguration = "Release|Any CPU"
+          structuredoutput = true
+          targetframework = fx20
+          terminateontimeout = false
+          timeoutlength = 2
+          traceconstant = false
+          updateassemblycomment = false
+          updateassemblycompany = false
+          updateassemblycopyright = false
+          updateassemblydescription = false
+          updateassemblyfileversion = false
+          updateassemblyinfo = false
+          updateassemblyproductname = false
+          updateassemblytitle = false
+          updateassemblytrademark = false
+          updateassemblyversion = false
+          updatewin32resource = false
+          usedotnetpropertyset = false
+          useenv = false
+          useerrordialogmonitor = false
+          usemsbuild = true
+          useregexonconfigname = false
+          usewin32propertyset = false
+          versioninfokeys = "FileVersion\=0.0.0.0" +
+                            ""
+          vstudioversion = vs2019
+          warninglevel = 4
+          win32versioninfo = "Win32 Version Info"
+          wmiwebsitenum = 1
+        end
+      end
+    end
+  end
+  target
+  begin
+    name = "Gather OPC DA/AE/HDA Client SDK .NET Standard"
+    targetid = {5EFE8660-2830-4D00-B99C-B7B621DBCC44}
+    rootaction
+    begin
+      action.group
+      begin
+        description = "Online Help & Manuals"
+        id = {63684C7D-04B1-47FC-B86C-147FF30168E3}
+        action.group
+        begin
+          description = .NET
+          id = {EECAA4C5-6113-461F-95C3-DEDB6A1A1CE6}
+          action.setstatus
+          begin
+            id = {86C60040-3713-4DFD-A800-5C3F47210D89}
+            isbold = false
+            setbold = false
+            setcolour = false
+            statusmessage = "Online Help & Manuals - English"
+            thecolour = 0
+          end
+          action.process.execute
+          begin
+            captureoutput = true
+            description = "Execute Program [ HelpStudio OPC DAAEHDA Client SDK .NET ]"
+            enablelivecapture = true
+            enablereturncodecheck = true
+            enabletimeout = false
+            expandimpersonationtoken = false
+            hidewindow = false
+            id = {1A70EE26-BB01-447B-9B12-DCB394A4B317}
+            impersonateusenetcredonly = false
+            impersonateuser = false
+            logoutput = true
+            logprocessparameters = true
+            params = "\"%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\OPC DAAEHDA Client SDK .NET Standard.dxp\" /buildconfiguration\=\"Default\""
+            processoraffinity = 0
+            processpriority = tpNormal
+            programname = "C:\\Program Files (x86)\\Innovasys\\DocumentX2019\\bin\\DocumentXCommandLine.exe"
+            redirectstderr = true
+            returncodecomparator = rcEqualTo
+            returncodetocheck = 0
+            startindir = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard"
+            terminateontimeout = false
+            timeoutlength = 1
+            useerrordialogmonitor = false
+            waitforcompletion = true
+          end
+        end
+        action.group
+        begin
+          description = "Source Distribution"
+          id = {F8DE6BD8-917A-4EA2-B41B-A5D0F50113C2}
+          action.xcopy
+          begin
+            changedafterdate = 39707
+            copyattributes = false
+            copyemptydirectories = false
+            copyencryptedifnotsupportedindest = false
+            copyfileauditsettings = false
+            copyfileschnagedafter = false
+            copyhiddenandsys = false
+            copynetworkedfiles = false
+            copynewerfiles = false
+            copyownershipandacl = false
+            copyusingshortnames = false
+            destination = %distr_netcore_dir%
+            enabletimeout = false
+            expandimpersonationtoken = false
+            id = {29154117-3E9F-482B-AABA-6994E9D5F1AD}
+            ignoreerrors = false
+            impersonateusenetcredonly = false
+            impersonateuser = false
+            logprocessparameters = true
+            onlyarchivefiles = false
+            onlyfilesthatalreadyexist = false
+            overwritereadonly = false
+            processoraffinity = 0
+            processpriority = tpNormal
+            source = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\OPC DAAEHDA Client SDK .NET Standard.chm"
+            terminateontimeout = false
+            timeoutlength = 2
+            turnoffarchivebit = false
+            useerrordialogmonitor = false
+            verify = false
+            xcopylogmode = logNormal
+            xcopymode = mdNormal
+          end
+          action.files.copy
+          begin
+            clearattributes = false
+            failifexists = false
+            failifzerofiles = true
+            filespec = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\Technosoftware.DaAeHdaClient_documentxgenerated.xml"
+            force = false
+            id = {A984CC46-3A3C-4166-94CF-9407E0875A8C}
+            logfilesaffected = true
+            overwrite = true
+            overwritereadonly = false
+            recurse = false
+            target = %distr_netcore_dir%\\bin\\net48\\Technosoftware.DaAeHdaClient.xml
+            targetisdir = false
+          end
+          action.files.copy
+          begin
+            clearattributes = false
+            failifexists = false
+            failifzerofiles = true
+            filespec = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\Technosoftware.DaAeHdaClient_documentxgenerated.xml"
+            force = false
+            id = {D8A55C90-7C54-43FD-A59B-31BD01136E17}
+            logfilesaffected = true
+            overwrite = true
+            overwritereadonly = false
+            recurse = false
+            target = %distr_netcore_dir%\\bin\\net472\\Technosoftware.DaAeHdaClient.xml
+            targetisdir = false
+          end
+          action.files.copy
+          begin
+            clearattributes = false
+            failifexists = false
+            failifzerofiles = true
+            filespec = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\Technosoftware.DaAeHdaClient_documentxgenerated.xml"
+            force = false
+            id = {AEE0CA48-6E29-4CF9-B94F-9D2649CA4050}
+            logfilesaffected = true
+            overwrite = true
+            overwritereadonly = false
+            recurse = false
+            target = %distr_netcore_dir%\\bin\\net462\\Technosoftware.DaAeHdaClient.xml
+            targetisdir = false
+          end
+          action.files.copy
+          begin
+            clearattributes = false
+            failifexists = false
+            failifzerofiles = true
+            filespec = "%distr_netcore_dir%\\doc\\OPC DAAEHDA Client SDK .NET Standard\\Technosoftware.DaAeHdaClient_documentxgenerated.xml"
+            force = false
+            id = {ABB004C8-0208-4FC0-A606-A06FE9E6FAC9}
+            logfilesaffected = true
+            overwrite = true
+            overwritereadonly = false
+            recurse = false
+            target = %distr_netcore_dir%\\bin\\netstandard2.1\\Technosoftware.DaAeHdaClient.xml
+            targetisdir = false
+          end
+        end
+      end
+    end
+  end
+  variable
+  begin
+    groupname = paths
+    name = building_ground_main_dir
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = c:\\opc-daaehda-net-standard-build
+    groupname = paths_git
+    name = build_dir
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = %build_dir%\\distr\\
+    groupname = paths_distr
+    name = distr_dir
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = %distr_dir%\\dotnetcore
+    groupname = paths_distr
+    name = distr_netcore_dir
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = v1.0.0
+    groupname = tags
+    name = git_tag
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = %build_dir%\\installer
+    groupname = paths
+    name = installer_dir
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = 1
+    groupname = version
+    name = major_version
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = 1
+    groupname = version
+    name = minor_version
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = 110
+    groupname = version
+    name = sdk_version
+    variablescope = vtProject
+  end
+  variable
+  begin
+    defaultvalue = git@github.com:technosoftware-gmbh/opc-daaehda-client-net-standard.git
+    groupname = git
+    name = technosoftware_git_distr_netcore_url
+    variablescope = vtProject
+  end
+end
