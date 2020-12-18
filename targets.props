@@ -1,6 +1,4 @@
 <Project>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '16.0'">
       <PropertyGroup>
         <AppTargetFrameworks>net462;netcoreapp3.1;net5.0-windows</AppTargetFrameworks>
         <AppTargetFramework>net5.0-windows</AppTargetFramework>
@@ -9,16 +7,4 @@
         <LibxTargetFrameworks>net462;net472;net48;netstandard2.1;net5.0-windows</LibxTargetFrameworks>
         <LibBinTargetFrameworks>net462;netstandard2.1</LibBinTargetFrameworks>
       </PropertyGroup>
-    </When>
-    <Otherwise>
-      <PropertyGroup>
-        <AppTargetFrameworks>net462;netcoreapp2.1</AppTargetFrameworks>
-        <AppTargetFramework>netcoreapp2.1</AppTargetFramework>
-        <TestsTargetFrameworks>netcoreapp2.1</TestsTargetFrameworks>
-        <LibTargetFrameworks>net462;netstandard2.0</LibTargetFrameworks>
-        <LibxTargetFrameworks>net462;netcoreapp2.0</LibxTargetFrameworks>
-        <LibBinTargetFrameworks>net462;netstandard2.0</LibBinTargetFrameworks>
-      </PropertyGroup>
-    </Otherwise>
-  </Choose>
 </Project>
