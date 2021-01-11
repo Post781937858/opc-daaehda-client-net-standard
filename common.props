@@ -1,33 +1,54 @@
-<!-- Modify this file to change assembly information.
-
-WARNING: DO NOT MODIFY this file unless you have created a backup copy.
-Incorrect changes to this file will make it impossible to load or build your
-projects from the command-line or the IDE. -->
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <!-- Defines common/shared assembly and NuGet package metadata. Typical
-  properties are:
-        $(Product)
-        $(Company)
-        $(Copyright)
-  -->
+<Project>
   <PropertyGroup>
-    <Product>OPC UA SDK .NET Standard</Product>
-    <Company>Technosoftware GmbH</Company>
+    <Product>OPC DA/AE/HDA Client Solution .NET Standard</Product>
+    <RepositoryUrl>https://github.com/technosoftware-gmbh/opc-daaehda-client-net-standard</RepositoryUrl>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <VersionSuffix>rc-$([System.DateTime]::Now.ToString("yyyyMMdd"))</VersionSuffix>
     <Copyright>Copyright © 2018 - 2020 Technosoftware GmbH</Copyright>
+    <Company>Technosoftware GmbH</Company>
+    <Authors>Technosoftware GmbH</Authors>
+    <NoWarn>NU5125;RCS1138;RCS1139</NoWarn>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <HighEntropyVA>true</HighEntropyVA>
+    <IsPackable>false</IsPackable>
+    <!--TODO <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+    <!--TODO <GenerateDocumentationFile>true</GenerateDocumentationFile>-->
   </PropertyGroup>
 
-  <!-- Defines properties which help customize the version update process. -->
   <PropertyGroup>
-    <GenerateReleaseNotes Condition="'$(GenerateReleaseNotes)' == ''">false</GenerateReleaseNotes>
-    <GenerateAssemblyBuildDateAttribute Condition="'$(GenerateAssemblyBuildDateAttribute)' == ''">true</GenerateAssemblyBuildDateAttribute>
-    <VersionStrategy Condition="'$(VersionStrategy)' == ''">ShortDate</VersionStrategy>
+    <PackageIcon>images/TechnosoftwareGmbH.png</PackageIcon>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <!--<PackageLicenseUrl>https://technosoftware.com/license-agreement/</PackageLicenseUrl>-->
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+  	<Documentation>README.md</Documentation>
+    <PackageReleaseNotes>https://github.com/technosoftware-gmbh/opc-daaehda-client-net-standard/releases</PackageReleaseNotes>
+    <PackageTags>Technosoftware OPC DA/AE/HDA .NET 5.0 dotnet windows netcore</PackageTags>
   </PropertyGroup>
 
-  <!-- The UpdateReleaseNotes target expects a single XML file as input and
-    one or more destination folders as output, as defined by the ItemGroup.
-    Uncomment this item group and change the path as necessary. -->
-    <ItemGroup Condition="'$(GenerateReleaseNotes)' == 'true'">
-      <ReleaseNotes Include="$(SolutionDir)/ReleaseNotes.xml" />
-      <DestinationFolders Include="$(SolutionDir)/SABOL.Web.Siemens/App_Data" />
-    </ItemGroup>
+  <ItemGroup Condition="'$(IsPackable)' != 'false'">
+    <None Include="$(MSBuildThisFileDirectory)/LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+    <None Include="$(MSBuildThisFileDirectory)/licenses/GPLv3License.txt" Pack="true" PackagePath="licenses/"/>
+    <None Include="$(MSBuildThisFileDirectory)/licenses/MITLicense.txt" Pack="true" PackagePath="licenses/"/>
+    <None Include="$(MSBuildThisFileDirectory)/licenses/Source_Code_License_Agreement.pdf" Pack="true" PackagePath="licenses/"/>
+    <None Include="$(MSBuildThisFileDirectory)/nuget/TechnosoftwareGmbH.png" Pack="true" PackagePath="$(PackageIcon)"/>
+    <None Include="$(MSBuildThisFileDirectory)/README.md" Pack="true" PackagePath="$(Documentation)"/>
+    <None Include="$(MSBuildThisFileDirectory)/CHANGELOG.md" Pack="true" PackagePath="/"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(NBGV_PublicRelease)' != ''">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
+  
+  <!-- Deterministic build is currently not supported for code coverage tests. -->
+  <PropertyGroup Condition="'$(CollectCoverage)' != 'true' AND ('$(TF_BUILD)' == 'true' OR '$(GITHUB_ACTIONS)' == 'true')">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
 </Project>

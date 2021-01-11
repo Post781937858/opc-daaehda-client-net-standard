@@ -5,6 +5,5 @@
         <TestsTargetFrameworks>net5.0-windows</TestsTargetFrameworks>
         <LibTargetFrameworks>net462;net472;net48;netstandard2.1;net5.0-windows</LibTargetFrameworks>
         <LibxTargetFrameworks>net462;net472;net48;netstandard2.1;net5.0-windows</LibxTargetFrameworks>
-        <LibBinTargetFrameworks>net462;netstandard2.1</LibBinTargetFrameworks>
       </PropertyGroup>
 </Project>

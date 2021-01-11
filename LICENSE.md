@@ -13,14 +13,14 @@ TECHNOSOFTWARE provides different licenses depending on the component and on the
 Following are basic rules on how TECHNOSOFTWARE licenses the different components:
 
 1. OPC DA/AE/HDA and OPC UA core components follow a dual-license model:
-  - Owner of a purchased license: [SCLA 1.0](license/Source_Code_License_Agreement.pdf)
+  - Owner of a purchased license: [SCLA 1.0](licenses/Source_Code_License_Agreement.pdf)
 
     enables Owner of a purchased license to deploy their applications using the core component sources without being required to disclose the application code.
 	
-  - Users that are not Owner of a purchased license: [GPL 3.0](license/GPLv3License.txt)
+  - Users that are not Owner of a purchased license: [GPL 3.0](licenses/GPLv3License.txt)
   
     Based on the GPL 3.0 license terms these users must disclose their application code when using the core component sources.
  
 2. Samples and Utilities: 
 
-  - All samples and most of the utilities are provided under the [MIT](license/MITLicense.txt) license for everyone.
+  - All samples and most of the utilities are provided under the [MIT](licenses/MITLicense.txt) license for everyone.

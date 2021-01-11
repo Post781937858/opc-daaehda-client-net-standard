@@ -6,19 +6,21 @@
     <LangVersion>7.3</LangVersion>
     <PackageId>Technosoftware.DaAeHdaClient</PackageId>
     <Description>OPC DA/AE/HDA Client SDK .NET Standard</Description>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Technosoftware.snk</AssemblyOriginatorKeyFile>
+    <Description>OPC DA/AE/HDA .NET Client Library</Description>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <PackageId>$(PackageId).Debug</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DefineConstants>NETCORE</DefineConstants>
-    <OutputPath>..\..\..\bin\</OutputPath>
-    <DocumentationFile>..\..\..\bin\$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;NETCORE</DefineConstants>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
