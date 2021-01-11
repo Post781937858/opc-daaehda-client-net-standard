@@ -17,6 +17,7 @@ pr:
     - 'documentation/*' 
     - 'Keys/*' 
     - 'tools/*' 
+    - 'examples/net/*' 
     - 'Workshop/*' 
     - 'README.md' 
 
