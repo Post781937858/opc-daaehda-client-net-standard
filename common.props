@@ -19,7 +19,7 @@
     <PackageIcon>images/TechnosoftwareGmbH.png</PackageIcon>
     <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
     <!--<PackageLicenseUrl>https://technosoftware.com/license-agreement/</PackageLicenseUrl>-->
-    <PackageLicenseFile>licenses/LICENSE.txt</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   	<Documentation>README.md</Documentation>
     <PackageReleaseNotes>https://github.com/technosoftware-gmbh/opc-daaehda-client-net-standard/releases</PackageReleaseNotes>
