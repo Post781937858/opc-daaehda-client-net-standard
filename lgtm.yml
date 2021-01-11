@@ -1,7 +1,0 @@
-extraction:
-  csharp:
-    index:
-      solution: "WorkshopClientSamples.sln"
-      msbuild:
-        configuration: "release"
-        platform: "Any CPU"

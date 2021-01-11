@@ -27,5 +27,7 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
   </ItemGroup>
-  
+
+  <Target Name="GetPackagingOutputs" />
+
 </Project>
