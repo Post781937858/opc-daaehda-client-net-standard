@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/AArnott/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
+  "version": "1.1.0-rc",
+  "versionHeightOffset": 0,
+  "nugetPackageVersion": {
+    "semVer": 2
+  },
+  "publicReleaseRefSpec": [
+    "^refs/heads/master$",
+    "^refs/heads/release/\\d+\\.\\d+\\.\\d+"
+  ],
+  "release": {
+    "firstUnstableTag": "rc"
+  },
+  "cloudBuild": {
+    "setVersionVariables": true,
+    "buildNumber": {
+      "enabled": true,
+      "includeCommitId": {
+        "when": "nonPublicReleaseOnly",
+        "where": "buildMetadata"
+      }
+    }
+  }
+}
