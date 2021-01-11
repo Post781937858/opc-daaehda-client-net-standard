@@ -42,39 +42,39 @@ jobs:
     displayName: Release Restore
     inputs:
       command: restore
-      projects: '**/@(Technosoftware.Simple|Technosoftware.ModelDesign)*.csproj'
+      projects: '**/@(DaConsole|AeConsole|HdaConsole)*.csproj'
       arguments: '--framework ${{ parameters.framework }} --configuration Release ${{ parameters.buildoption }}'
   - task: DotNetCoreCLI@2
     displayName: Release Build
     inputs:
       command: build
-      projects: '**/@(Technosoftware.Simple|Technosoftware.ModelDesign)*.csproj'
+      projects: '**/@(DaConsole|AeConsole|HdaConsole)*.csproj'
       arguments: '--framework ${{ parameters.framework }} --no-restore --configuration Release ${{ parameters.buildoption }}'
   - task: DotNetCoreCLI@2
     displayName: Release Pack 
     condition: eq(variables['poolImage'], 'windows-2019')
     inputs:
       command: pack
-      packagesToPack:  '**/Opc.Ua.*.csproj'
+      packagesToPack:  '**/Technosoftware.DaAeHdaClient.csproj'
       configuration: Release
       configurationToPack: Release
   - task: DotNetCoreCLI@2
     displayName: Debug Restore
     inputs:
       command: restore
-      projects: '**/@(Technosoftware.Simple|Technosoftware.ModelDesign)*.csproj'
+      projects: '**/@(DaConsole|AeConsole|HdaConsole)*.csproj'
       arguments: '--framework ${{ parameters.framework }} --configuration Debug ${{ parameters.buildoption }}'
   - task: DotNetCoreCLI@2
     displayName: Debug Build
     inputs:
       command: build
-      projects: '**/@(Technosoftware.Simple|Technosoftware.ModelDesign)*.csproj'
+      projects: '**/@(DaConsole|AeConsole|HdaConsole)*.csproj'
       arguments: '--framework ${{ parameters.framework }} --no-restore --configuration Debug ${{ parameters.buildoption }}'
   - task: DotNetCoreCLI@2
     displayName: Debug Pack 
     condition: eq(variables['poolImage'], 'windows-2019')
     inputs:
       command: pack
-      packagesToPack:  '**/Opc.Ua.*.csproj'
+      packagesToPack:  '**/Technosoftware.DaAeHdaClient.csproj'
       configuration: Debug
       configurationToPack: Debug
