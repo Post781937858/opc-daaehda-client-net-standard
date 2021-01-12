@@ -1,11 +1,12 @@
 -------------------------------------------------------------------------------------------------------------
-## OPC DA/AE/HDA Client SDK .NET Standard - 1.1.0
+## OPC DA/AE/HDA Client Solution .NET - 1.1.0
 
 ###	Enhancements
+- Support of .NET 5.0
 - Added nuget packages
 
 -------------------------------------------------------------------------------------------------------------
-## OPC DA/AE/HDA Client SDK .NET Standard - 1.0.0902
+## OPC DA/AE/HDA Client Solution .NET - 1.0.0902
 
 ###	Enhancements
 - Support of .NET Standard 2.1

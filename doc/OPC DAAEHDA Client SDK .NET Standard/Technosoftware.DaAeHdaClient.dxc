@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ContentFile Version="2010" Moniker="..\..\bin\net48\Technosoftware.DaAeHdaClient.dll" DocType="DX.NET" IsLocalizationDisabled="false">
-  <RelatedProject>OPC DAAEHDA Client SDK .NET Standard.dxp</RelatedProject>
-  <State>
-    <Attributes />
-  </State>
-  <LastSelectedItem />
-  <Filters />
-</ContentFile>

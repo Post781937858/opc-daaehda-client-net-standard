@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
-    <Product>OPC DA/AE/HDA Client Solution .NET Standard</Product>
-    <RepositoryUrl>https://github.com/technosoftware-gmbh/opc-daaehda-client-net-standard</RepositoryUrl>
+    <Product>OPC DA/AE/HDA Client Solution .NET</Product>
+    <RepositoryUrl>https://github.com/technosoftware-gmbh/opcdaaehda-client-solution-net</RepositoryUrl>
     <VersionPrefix>1.1.0</VersionPrefix>
     <VersionSuffix>rc-$([System.DateTime]::Now.ToString("yyyyMMdd"))</VersionSuffix>
     <Copyright>Copyright © 2011 - 2020 Technosoftware GmbH</Copyright>
@@ -22,15 +22,13 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   	<Documentation>README.md</Documentation>
-    <PackageReleaseNotes>https://github.com/technosoftware-gmbh/opc-daaehda-client-net-standard/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/technosoftware-gmbh/opcdaaehda-client-solution-net/releases</PackageReleaseNotes>
     <PackageTags>Technosoftware OPC DA/AE/HDA .NET 5.0 dotnet windows netcore</PackageTags>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(IsPackable)' != 'false'">
     <None Include="$(MSBuildThisFileDirectory)/LICENSE.md" Pack="true" PackagePath="$(PackageLicenseFile)"/>
-    <None Include="$(MSBuildThisFileDirectory)/licenses/GPLv3License.txt" Pack="true" PackagePath="licenses/"/>
-    <None Include="$(MSBuildThisFileDirectory)/licenses/MITLicense.txt" Pack="true" PackagePath="licenses/"/>
-    <None Include="$(MSBuildThisFileDirectory)/licenses/Source_Code_License_Agreement.pdf" Pack="true" PackagePath="licenses/"/>
+    <None Include="$(MSBuildThisFileDirectory)/nuget/Technosoftware_SLA.pdf" Pack="true" PackagePath="licenses/"/>
     <None Include="$(MSBuildThisFileDirectory)/nuget/TechnosoftwareGmbH.png" Pack="true" PackagePath="$(PackageIcon)"/>
     <None Include="$(MSBuildThisFileDirectory)/README.md" Pack="true" PackagePath="$(Documentation)"/>
     <None Include="$(MSBuildThisFileDirectory)/CHANGELOG.md" Pack="true" PackagePath="/"/>

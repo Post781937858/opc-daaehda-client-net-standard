@@ -29,7 +29,6 @@
 # OPC UA
 *.uanodes binary
 
-testclientserver.sh linguist-vendored
 bin/* linguist-vendored
 build/* linguist-vendored
 examples/* linguist-vendored=false
